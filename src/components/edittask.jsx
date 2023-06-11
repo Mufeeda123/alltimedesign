@@ -31,8 +31,7 @@ export default function Edittask({
         `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${taskvalue}?company_id=${companyId}`,
         {
           headers: {
-            Authorization:
-              `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
             Accept: "application/json",
             "Content-Type": "application/json",
           },
@@ -50,7 +49,7 @@ export default function Edittask({
           `https://stage.api.sloovi.com/team?product=outreach&company_id=${companyId}`,
           {
             headers: {
-              Authorization:  `Bearer ${accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
               Accept: "application/json",
               "Content-Type": "application/json",
             },
@@ -109,11 +108,10 @@ export default function Edittask({
         taskData,
         {
           headers: {
-            Authorization:  `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-         
         }
       );
 
@@ -161,7 +159,6 @@ export default function Edittask({
               <h3 className="text-lg font-bold">Selected User Details</h3>
               <p>Name: {userDetails.name}</p>
               <p>Email: {userDetails.email}</p>
-              
             </div>
           )}
 
@@ -205,19 +202,25 @@ export default function Edittask({
               required
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => setediting("dashboard")}
-          >
-            Go back
-          </button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{ display: "flex", justifyContent: "center", gap: "10px" }}
+            >
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="bg-red-700 text-white px-4 py-2 rounded"
+                onClick={() => setediting("dashboard")}
+              >
+                Go back
+              </button>
+            </div>
+          </div>
         </form>
         {/* )} */}
       </div>

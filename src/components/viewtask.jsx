@@ -92,7 +92,7 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
           <Edittask taskvalue={edittask} setediting={setediting} setIsLoading={setIsLoading}/>
         ) : (
           <div>
-            <h2>Tasks</h2>
+            <h2>You have {tasks.length} Tasks</h2>
             <ul>
               {tasks.map((task) => (
                 <div key={task.id} className="bg-gray-200 text-gray-800 border border-gray-400 p-4 mb-4">
