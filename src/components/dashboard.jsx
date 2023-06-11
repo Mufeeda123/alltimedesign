@@ -11,14 +11,14 @@ const AdminDashboard = () => {
 
   switch (activePage) {
     case "dashboard":
-      content = <Viewtask />;
+      content = <Viewtask accessToken={localStorage.getItem("accesstoken")} companyId={localStorage.getItem("companyid")}/>;
       break;
     case "users":
       content = <Addtask setActivePage={setActivePage} />;
       break;
   
     default:
-      content = <Viewtask setActivePage={setActivePage} />;
+      content = <Viewtask setActivePage={setActivePage}  accessToken={localStorage.getItem("accesstoken")}  companyId={localStorage.getItem("companyid")}/>;
   }
 
   return (

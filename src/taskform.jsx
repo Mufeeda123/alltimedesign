@@ -32,7 +32,7 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `https://stage.api.sloovi.com/team?product=outreach&company_id=company_0f8d040401d14916bc2430480d7aa0f8`,
+          `https://stage.api.sloovi.com/team?product=outreach&company_id=${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -109,7 +109,7 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
     console.log(taskTime);
     try {
       const response = await axios.post(
-        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2?company_id=company_0f8d040401d14916bc2430480d7aa0f8`,
+        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2?company_id=${companyId}`,
         taskData,
         {
           headers: {

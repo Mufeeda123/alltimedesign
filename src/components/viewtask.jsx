@@ -12,16 +12,16 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [edittask, setedittask] = useState('')
   const [editing, setediting] = useState(false)
-  const tokenValue = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODY0NTIyNTksIm5iZiI6MTY4NjQ1MjI1OSwianRpIjoiNGVmNGMzZDktMmJkYS00NDg5LWIxZTgtYWM4NWI4NzBhN2Q2IiwiaWRlbnRpdHkiOnsibmFtZSI6IlNhcmF2YW5hbiBDIiwiZW1haWwiOiJzbWl0aHdpbGxzMTk4OUBnbWFpbC5jb20iLCJ1c2VyX2lkIjoidXNlcl84YzJmZjIxMjhlNzA0OTNmYTRjZWRkMmNhYjk3YzQ5MiIsImljb24iOiJodHRwOi8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvY2Y5NGI3NGJkNDFiNDY2YmIxODViZDRkNjc0ZjAzMmI_ZGVmYXVsdD1odHRwcyUzQSUyRiUyRnMzLnNsb292aS5jb20lMkZhdmF0YXItZGVmYXVsdC1pY29uLnBuZyIsImJ5X2RlZmF1bHQiOiJvdXRyZWFjaCJ9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.-YW6d9QvX03DzyrbQGrVLd0uCXETRQ-HjykjpSkuZ5k"
+  // const tokenValue = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODY0NTIyNTksIm5iZiI6MTY4NjQ1MjI1OSwianRpIjoiNGVmNGMzZDktMmJkYS00NDg5LWIxZTgtYWM4NWI4NzBhN2Q2IiwiaWRlbnRpdHkiOnsibmFtZSI6IlNhcmF2YW5hbiBDIiwiZW1haWwiOiJzbWl0aHdpbGxzMTk4OUBnbWFpbC5jb20iLCJ1c2VyX2lkIjoidXNlcl84YzJmZjIxMjhlNzA0OTNmYTRjZWRkMmNhYjk3YzQ5MiIsImljb24iOiJodHRwOi8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvY2Y5NGI3NGJkNDFiNDY2YmIxODViZDRkNjc0ZjAzMmI_ZGVmYXVsdD1odHRwcyUzQSUyRiUyRnMzLnNsb292aS5jb20lMkZhdmF0YXItZGVmYXVsdC1pY29uLnBuZyIsImJ5X2RlZmF1bHQiOiJvdXRyZWFjaCJ9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.-YW6d9QvX03DzyrbQGrVLd0uCXETRQ-HjykjpSkuZ5k"
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get(
-          `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2?company_id=company_0f8d040401d14916bc2430480d7aa0f8`,
+          `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2?company_id=${companyId}`,
           {
             headers: {
-              'Authorization': `Bearer ${tokenValue}`,
+              'Authorization':  `Bearer ${accessToken}`,
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
@@ -56,10 +56,10 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
 
     try {
       const response = await axios.delete(
-        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${taskId}?company_id=company_0f8d040401d14916bc2430480d7aa0f8`,
+        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${taskId}?company_id=${companyId}`,
         {
           headers: {
-            'Authorization': `Bearer ${tokenValue}`,
+            'Authorization': `Bearer ${accessToken}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
