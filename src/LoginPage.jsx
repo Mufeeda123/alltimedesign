@@ -39,20 +39,20 @@ function LoginPage() {
        
 
         const data = await response.json();
-        console.log("API Response:", data); // Log the entire response to inspect its structure
+        // console.log("API Response:", data); // Log the entire response to inspect its structure
 
         const { token, company_id, user_id } = data.results;
 
-        console.log("User Details:", data.results);
+        ("User Details:", data.results);
 
 
         if (token && company_id && user_id) {
           // Continue to the next step with the retrieved values
           // For example, redirect the user to a dashboard page
           // and pass the token, company_id, and user_id as props or using a state management library
-          console.log("Access Token:", token);
-          console.log("Company ID:", company_id);
-          console.log("User ID:", user_id);
+          // console.log("Access Token:", token);
+          // console.log("Company ID:", company_id);
+          // console.log("User ID:", user_id);
           localStorage.setItem("accesstoken",token);
           localStorage.setItem("companyid",company_id);
           localStorage.setItem("islogin",true);

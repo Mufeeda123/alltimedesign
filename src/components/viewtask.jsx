@@ -68,7 +68,7 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
 
       if (response.status === 200) {
         toast.success('Task deleted successfully');
-        console.log(response);
+        // console.log(response);
       } else {
         toast.error('Failed to delete task');
       }
@@ -79,7 +79,7 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
     }
   }
   const editfunction = (taskId) => {
-    console.log(taskId);
+    // console.log(taskId);
     setedittask(taskId)
     setediting(true)
   }
@@ -89,7 +89,7 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
 
       {
         editing == true ? (
-          <Edittask taskvalue={edittask} setediting={setediting} setIsLoading={setIsLoading}/>
+          <Edittask taskvalue={edittask} setediting={setediting} setIsLoading={setIsLoading} accessToken={localStorage.getItem("accesstoken")}  companyId={localStorage.getItem("companyid")}/>
         ) : (
           <div>
             <h2>You have {tasks.length} Tasks</h2>

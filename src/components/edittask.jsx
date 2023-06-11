@@ -18,13 +18,12 @@ export default function Edittask({
   const [selectedUser, setSelectedUser] = useState("");
   const [userList, setUserList] = useState([]);
   const [taskDate, setTaskDate] = useState("");
-  const [taskTime, setTaskTime] = useState("");
+  const [taskTime, setTaskTime] = useState();
   const [taskDescription, setTaskDescription] = useState("");
   const [error, setError] = useState(null);
   const [userDetails, setUserDetails] = useState(null); // State to hold the selected user details
   const [tasks, setTasks] = useState([]); // State to hold the tasks
   const [showForm, setShowForm] = useState(false); // State to track the visibility of the form
-
   useEffect(() => {
     const edit = axios
       .get(
@@ -39,9 +38,24 @@ export default function Edittask({
       )
       .then((response) => {
         console.log(response.data.results);
-      });
+        setTaskDescription(response.data.results.task_msg);
+        setTasks(response.data.results.task_time);
+      })
+      .catch((e) => console.log(e));
     // console.log(edit)
   }, []);
+
+  useEffect(() => {
+    const totalSeconds = Number(tasks);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const time = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    // console.log(time);
+    setTaskTime(time);
+  }, [tasks]);
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -57,11 +71,11 @@ export default function Edittask({
         );
         if (response.status === 200) {
           setUserList(response.data.results.data);
-          console.log("user details");
-          console.log(response.data);
+          // console.log("user details");
+          // console.log(response.data);
         } else {
           setError("Failed to fetch user details");
-          console.log("error");
+          // console.log("error");
         }
       } catch (error) {
         setError("Error during user details fetch");
@@ -72,7 +86,7 @@ export default function Edittask({
   }, []);
 
   useEffect(() => {
-    console.log(userList);
+    // console.log(userList);
   }, [userList]);
 
   const handleUserSelect = (e) => {
@@ -101,7 +115,7 @@ export default function Edittask({
       task_msg: taskDescription,
     };
 
-    console.log(taskTime);
+    // console.log(taskTime);
     try {
       const response = await axios.put(
         ` https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${taskvalue}?company_id=${companyId}`,
@@ -117,8 +131,6 @@ export default function Edittask({
 
       if (response.status === 200) {
         const data = response.data;
-        console.log("API Response:", data);
-        setTasks((prevTasks) => [...prevTasks, data]);
 
         setIsLoading(true);
         setediting("dashboard");

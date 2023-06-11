@@ -106,7 +106,7 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
       task_msg: taskDescription,
     };
 
-    console.log(taskTime);
+    // console.log(taskTime);
     try {
       const response = await axios.post(
         `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2?company_id=${companyId}`,
@@ -123,7 +123,7 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
 
       if (response.status === 200) {
         const data = response.data;
-        console.log("API Response:", data);
+        // console.log("API Response:", data);
         setTasks((prevTasks) => [...prevTasks, data]); // Add the new task to the tasks state
         setActivePage("dashboard");
         // Handle any further actions or display success message
