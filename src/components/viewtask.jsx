@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import { useLocation } from "react-router";
 import Edittask from "./edittask";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const Viewtask = ({ accessToken, companyId, setActivePage }) => {
   const [tasks, setTasks] = useState([]);
@@ -43,37 +45,37 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
     fetchTasks();
   }, [isLoading]);
 
-  const deleteTask = (taskId) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      handleDeleteTask(taskId);
-      setTasks(tasks.filter((task) => task.id !== taskId));
-    }
-  };
+  // const deleteTask = (taskId) => {
+  //   if (window.confirm("Are you sure you want to delete this task?")) {
+  //     handleDeleteTask(taskId);
+  //     setTasks(tasks.filter((task) => task.id !== taskId));
+  //   }
+  // };
 
-  const handleDeleteTask = async (taskId) => {
-    try {
-      const response = await axios.delete(
-        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${taskId}?company_id=${companyId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  // const handleDeleteTask = async (taskId) => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${taskId}?company_id=${companyId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           Accept: "application/json",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        toast.success("Task deleted successfully");
-        // console.log(response);
-      } else {
-        toast.error("Failed to delete task");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Error during task deletion");
-    }
-  };
+  //     if (response.status === 200) {
+  //       toast.success("Task deleted successfully");
+  //       // console.log(response);
+  //     } else {
+  //       toast.error("Failed to delete task");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error during task deletion");
+  //   }
+  // };
   const editfunction = (taskId) => {
     // console.log(taskId);
     setedittask(taskId);
@@ -89,6 +91,8 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
           accessToken={localStorage.getItem("accesstoken")}
           companyId={localStorage.getItem("companyid")}
           setIsLoading={setIsLoading}
+          setTasks={setTasks}
+          tasks={tasks}
         />
       ) : (
         <div>
@@ -97,22 +101,15 @@ const Viewtask = ({ accessToken, companyId, setActivePage }) => {
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className="bg-gray-200 text-gray-800 border border-gray-400 p-4 mb-4"
+                className="bg-gray-200 text-gray-800 border border-gray-400 p-3 pl-6 mb-4 flex items-center"
               >
-                <li>{task.task_msg}</li>
-                <div className="flex justify-end mt-2">
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                <li className="flex-grow">{task.task_msg}</li>
+                <div>
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    className="text-black cursor-pointer px-4 py-2 rounded mr-2"
                     onClick={() => editfunction(task.id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                    onClick={() => deleteTask(task.id)}
-                  >
-                    Delete
-                  </button>
+                  />
                 </div>
               </div>
             ))}

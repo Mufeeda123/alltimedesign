@@ -12,6 +12,7 @@ const Addtask = ({ setActivePage }) => {
         companyId={localStorage.getItem("companyid")}
         leadId="your-lead-id"
         setActivePage={setActivePage}
+        
       />
     </>
   );

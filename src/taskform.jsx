@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Viewtask from "./components/viewtask";
 
-function TaskForm({ accessToken, companyId, setActivePage }) {
+function TaskForm({ accessToken, companyId, setActivePage,setediting }) {
   const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState("");
   const [userList, setUserList] = useState([]);
@@ -144,28 +144,8 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
   }
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="bg-white p-8 shadow-md rounded-lg">
+      <div className="bg-white p-10 shadow-md rounded-lg">
         <form onSubmit={handleTaskSubmit} className="mt-4">
-          <div className="mb-4">
-            <label htmlFor="user" className="block">
-              User:
-            </label>
-            <select
-              id="user"
-              value={selectedUser}
-              onChange={handleUserSelect}
-              className="border rounded p-1"
-              required
-            >
-              <option value="">Select User</option>
-              {userList.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
           {/* Display selected user details */}
           {userDetails && (
             <div className="mb-4">
@@ -177,51 +157,91 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
           )}
 
           <div className="mb-4">
-            <label htmlFor="date" className="block text-xl">
-              Date:
-            </label>
-            <input
-              id="date"
-              type="date"
-              value={taskDate}
-              onChange={(e) => setTaskDate(e.target.value)}
-              className="border rounded p-2 text-xl"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="time" className="block text-xl">
-              Time:
-            </label>
-            <input
-              id="time"
-              type="time"
-              value={taskTime}
-              onChange={(e) => setTaskTime(e.target.value)}
-              className="border rounded p-2 text-xl"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-xl" required>
-              Description:
+            <label htmlFor="description" className="block text-xl " required>
+              Task Description
             </label>
             <textarea
               id="description"
               value={taskDescription}
               onChange={(e) => setTaskDescription(e.target.value)}
-              className="border rounded p-2 text-xl"
+              className="border rounded  text-xl "
+              style={{ width: "100%" }}
               required
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Save
-          </button>
+          <div className="mb-4 flex items-center">
+            <div className="mr-4">
+              <label htmlFor="date" className="block text-xl">
+                Date
+              </label>
+              <input
+                id="date"
+                type="date"
+                value={taskDate}
+                onChange={(e) => setTaskDate(e.target.value)}
+                className="border rounded p-2 text-xl"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="time" className="block text-xl">
+                Time
+              </label>
+              <input
+                id="time"
+                type="time"
+                value={taskTime}
+                onChange={(e) => setTaskTime(e.target.value)}
+                className="border rounded p-2 text-xl w-40"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="description" className="block text-xl" required>
+              Assign User
+            </label>
+            <select
+              id="user"
+              value={selectedUser}
+              onChange={handleUserSelect}
+              className="border rounded w- p-2 text-xl "
+              style={{ width: "100%" }}
+              required
+            >
+              <option value="">Select User</option>
+              {userList.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                  }}
+                >
+              <button
+                type="button"
+                className=" text-black px-4 py-2 rounded"
+                onClick={() => setActivePage("dashboard")}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Save
+              </button>
+            </div>
+          </div>
         </form>
         {/* )} */}
       </div>
@@ -229,3 +249,5 @@ function TaskForm({ accessToken, companyId, setActivePage }) {
   );
 }
 export default TaskForm;
+
+
