@@ -393,7 +393,7 @@ function TaskForm({ accessToken, companyId }) {
         }
       )
       .then((response) => {
-        console.log(response.data.results, 'response');
+        console.log(response.data.results, "response");
         setTaskDescription(response.data.results.task_msg);
         setTotalTime(response.data.results.task_time);
         setTaskDate(response.data.results.task_date);
@@ -429,7 +429,7 @@ function TaskForm({ accessToken, companyId }) {
       task_msg: taskDescription,
     };
 
-    console.log(taskData, 'taskData');
+    console.log(taskData, "taskData");
 
     try {
       const response = await axios.put(
@@ -540,7 +540,7 @@ function TaskForm({ accessToken, companyId }) {
           {tasks.length}
         </p>
         <div
-          className="border border-color-black "
+          className="border border-color-black cursor-pointer "
           style={{
             width: "50px",
             height: "57px",
@@ -1067,64 +1067,71 @@ function TaskForm({ accessToken, companyId }) {
                     className=" bg-white text-gray-800 border -mt-5  p-4 pl-6 mb-4 flex "
                     style={{
                       width: "505px",
-                      height: "90px",
+                      height: "70px",
                       borderColor: "#E5E5E5",
                       marginLeft: "69px",
                     }}
                   >
                     <div className="flex-left">
-                      {/* <li
-                        className="flex-grow text-black font-semibold "
-                        style={{ color: "#262E39" }}
-                      >
-                        {task.task_msg}
-                      </li> */}
                       <li
                         className={`flex-grow text-black font-semibold ${
                           task.is_completed ? "completed-task" : ""
                         }`}
-                        style={{ color: "#262E39" }}
+                        style={{
+                          color: "#262E39",
+                          width: "190px", // Adjust the width as per your requirements
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
                       >
                         <span>{task.task_msg}</span>
                       </li>
                       <li
-                        className="flex-grow text-black font-semibold "
+                        className="flex-grow text-black font-semibold -mt-2"
                         style={{ color: "#D0021B" }}
                       >
                         {task.task_date}
                       </li>
                     </div>
-                    <div className="flex items-center justify-end">
-                      <div className="ml-auto">
-                        <FontAwesomeIcon
-                          icon={faPencilAlt}
-                          className="text-black cursor-pointer px-4 py-2 rounded mr-1"
-                          style={{
-                            color: "#464A55",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => {
-                            setIsAdd(false);
-                            setEditVariable(task.id);
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          icon={faBell}
-                          className="text-black cursor-pointer px-4 py-2 rounded mr-1"
-                          style={{
-                            color: "#464A55",
-                            fontSize: "16px",
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className="text-black cursor-pointer px-4 py-2 rounded"
-                          style={{
-                            color: "#464A55",
-                            fontSize: "20px",
-                          }}
-                          // onClick={() => setValue(task.id)}
-                        />
+                    <div className="flex-end justify-end ml-44 "
+                    // style={{marginRight:"750px"}}
+                    >
+                      <div className="ml-auto flex -space-x-4">
+                        <div className="flex ">
+                          <FontAwesomeIcon
+                            icon={faPencilAlt}
+                            className="text-black cursor-pointer px-4 py-2 rounded"
+                            style={{
+                              color: "#464A55",
+                              fontSize: "16px",
+                            }}
+                            onClick={() => {
+                              setIsAdd(false);
+                              setEditVariable(task.id);
+                            }}
+                          />
+                        </div>
+                        <div className="flex">
+                          <FontAwesomeIcon
+                            icon={faBell}
+                            className="text-black cursor-pointer px-4 py-2 rounded"
+                            style={{
+                              color: "#464A55",
+                              fontSize: "16px",
+                            }}
+                          />
+                        </div>
+                        <div className="flex ">
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className="text-black cursor-pointer px-4 py-2 rounded"
+                            style={{
+                              color: "#464A55",
+                              fontSize: "20px",
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
