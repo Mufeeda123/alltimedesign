@@ -1,0 +1,52 @@
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+  }
+  
+  
+  .select-arrow.up {
+    top: auto;
+    bottom: 50%;
+    transform: translateY(-50%) rotate(360deg);
+  
+    border-color: transparent transparent #000 transparent;
+   
+  }
+  
+  .select-arrow.down {
+    bottom: auto;
+    top: 40%;
+    
+    transform: translateY(50%) rotate(360deg);
+    border-color: #000 transparent transparent transparent;
+  }
+
+  .black-placeholderText {
+    color: black;
+  }
+  
+  /* .react-datepicker__input {
+    color: blac; 
+  } */
+
+  .custom-datepicker .react-datepicker-wrapper input::placeholder {
+    color: black; /* Replace with your desired color */
+  }
+
+  .react-datepicker__input-time-container,
+.react-datepicker-time__caption {
+  display: none;
+}

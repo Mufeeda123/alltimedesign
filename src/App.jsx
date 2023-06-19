@@ -1,25 +1,25 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import LoginPage from "./LoginPage";
-import TaskForm from "./taskform";
+// import { Navigate } from "react-router-dom";
+// import LoginPage from "./LoginPage";
+// import TaskForm from "./taskform";
 import AdminDashboard from "./components/dashboard";
-import Viewtask from "./components/viewtask";
+// import Viewtask from "./components/viewtask";
 
 function App() {
-  const [taskTime, setTaskTime] = useState(null);
-  const [sessionstorage, setsessionstorage] = useState(false);
-  useEffect(() => {
-    const session = localStorage.getItem("islogin");
-    if (session) {
-      setsessionstorage(true);
-    }
-  });
+  // const [taskTime, setTaskTime] = useState(null);
+  // const [sessionstorage, setsessionstorage] = useState(false);
+  // useEffect(() => {
+  //   const session = localStorage.getItem("islogin");
+  //   if (session) {
+  //     setsessionstorage(true);
+  //   }
+  // });
   return (
     <Router>
       <Routes>
-        <Route
+        {/* <Route
           exact
           path="/"
           element={
@@ -30,6 +30,11 @@ function App() {
           exact
           path="/admindashboard"
           element={sessionstorage ? <AdminDashboard /> : <Navigate to="/" />}
+        /> */}
+         <Route
+          exact
+          path="*"
+          element={<AdminDashboard />}
         />
       </Routes>
     </Router>

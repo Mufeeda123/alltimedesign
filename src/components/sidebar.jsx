@@ -14,7 +14,7 @@ const Sidebar = ({ setActivePage }) => {
   };
   return (
     <div className="bg-gray-800 w-64 min-h-screen px-8 py-4 text-white">
-      <h1 className="text-2xl font-bold">Welcome</h1>
+      {/* <h1 className="text-2xl font-bold">Welcome</h1>
       <ul className="mt-4">
         <li className="py-2">
           <button className="text-gray-300 hover:text-white" onClick={() => setActivePage('dashboard')}>View task</button>
@@ -22,14 +22,11 @@ const Sidebar = ({ setActivePage }) => {
         <li className="py-2">
           <button className="text-gray-300 hover:text-white" onClick={() => setActivePage('users')}>Add task</button>
         </li>
-        {/* <li className="py-2">
-          <button className="text-gray-300 hover:text-white" onClick={() => setActivePage('products')}>Products</button>
-        </li> */}
         <li className="py-2">
           <button className="text-black hover:text-blue-700 bg-blue-700 border border-blue-500 hover:border-blue-700 px-4 py-2 rounded" onClick={handleLogout}>Logout</button>
         </li>
 
-      </ul>
+      </ul> */}
     </div>
   );
 };

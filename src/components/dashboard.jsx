@@ -5,7 +5,7 @@ import Viewtask from "./viewtask";
 import Addtask from "./addtask";
 import Sidebar from "./sidebar";
 const AdminDashboard = () => {
-  const [activePage, setActivePage] = useState("dashboard");
+  const [activePage, setActivePage] = useState("users");
 
   let content;
 
@@ -24,7 +24,7 @@ const AdminDashboard = () => {
   return (
     <div className="flex">
       <Sidebar setActivePage={setActivePage} />
-      <div className="flex-1 p-8 bg-gray-100">{content}</div>
+      <div className="flex-1" style={{backgroundColor:"#fffaff"}}>{content}</div>
     </div>
   );
 };
