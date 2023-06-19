@@ -35,7 +35,7 @@ function TaskForm({ accessToken, companyId }) {
   const [selectedUser, setSelectedUser] = useState("");
   const [userList, setUserList] = useState([]);
   const [taskDate, setTaskDate] = useState("");
-  const [taskTime, setTaskTime] = useState("");
+  const [taskTime, setTaskTime] = useState();
   const [taskDescription, setTaskDescription] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -63,6 +63,7 @@ function TaskForm({ accessToken, companyId }) {
   // const handleCancel = () => {
   //   setShowForm(false);
   // };
+  console.log(totalTime,'time');
   const formattedDate = selectedDate
     ? parse(selectedDate, "yyyy-MM-dd", new Date())
     : null;
@@ -154,6 +155,11 @@ function TaskForm({ accessToken, companyId }) {
         );
         setParsing(false);
         // setIsLoading(true);
+        setTaskDescription("");
+        setTotalTime("");
+        setTaskDate("");
+        setSelectedDate("");
+        setSelectedUser("");
         setEditVariable("");
       } else {
         setError("Failed to add task");
@@ -380,93 +386,93 @@ function TaskForm({ accessToken, companyId }) {
   };
 
   // Toggle state
-  useEffect(() => {
-    axios
-      .get(
-        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${value}?company_id=${companyId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data.results, "response");
-        setTaskDescription(response.data.results.task_msg);
-        setTotalTime(response.data.results.task_time);
-        setTaskDate(response.data.results.task_date);
-        setSelectedDate(response.data.results.task_date);
-        setSelectedUser(response.data.results.assigned_user);
-        setIsComplete(response.data.results.is_completed);
-        // toggleState();
-      })
-      .catch((e) => console.log(e));
-    // console.log(edit)
-  }, [value]);
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${value}?company_id=${companyId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           Accept: "application/json",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       console.log(response.data.results, "response");
+  //       setTaskDescription(response.data.results.task_msg);
+  //       setTotalTime(response.data.results.task_time);
+  //       setTaskDate(response.data.results.task_date);
+  //       setSelectedDate(response.data.results.task_date);
+  //       setSelectedUser(response.data.results.assigned_user);
+  //       setIsComplete(response.data.results.is_completed);
+  //       // toggleState();
+  //     })
+  //     .catch((e) => console.log(e));
+  //   // console.log(edit)
+  // }, [value]);
 
-  const toggleState = async (e) => {
-    // e.preventDefault();
-    setParsing(true);
+  // const toggleState = async (e) => {
+  //   // e.preventDefault();
+  //   setParsing(true);
 
-    // Convert taskTime to seconds
-    const [hours, minutes] = taskTime.split(":");
-    const totalSeconds = parseInt(hours) * 60 * 60 + parseInt(minutes) * 60;
-    let status;
-    const complete = isComplete;
-    if (complete == 0) {
-      status = 1;
-    } else {
-      status = 0;
-    }
-    const taskData = {
-      assigned_user: selectedUser,
-      task_date: taskDate,
-      task_time: totalSeconds,
-      is_completed: status,
-      time_zone: new Date().getTimezoneOffset() * 60,
-      task_msg: taskDescription,
-    };
+  //   // Convert taskTime to seconds
+  //   const [hours, minutes] = taskTime.split(":");
+  //   const totalSeconds = parseInt(hours) * 60 * 60 + parseInt(minutes) * 60;
+  //   let status;
+  //   const complete = isComplete;
+  //   if (complete == 0) {
+  //     status = 1;
+  //   } else {
+  //     status = 0;
+  //   }
+  //   const taskData = {
+  //     assigned_user: selectedUser,
+  //     task_date: taskDate,
+  //     task_time: totalSeconds,
+  //     is_completed: status,
+  //     time_zone: new Date().getTimezoneOffset() * 60,
+  //     task_msg: taskDescription,
+  //   };
 
-    console.log(taskData, "taskData");
+  //   console.log(taskData, "taskData");
 
-    try {
-      const response = await axios.put(
-        ` https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${value}?company_id=${companyId}`,
-        taskData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //   try {
+  //     const response = await axios.put(
+  //       ` https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${value}?company_id=${companyId}`,
+  //       taskData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           Accept: "application/json",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        console.log("completion");
+  //     if (response.status === 200) {
+  //       console.log("completion");
 
-        setTasks((prevTasks) =>
-          prevTasks.map((task) => {
-            if (task.id === value) {
-              return { ...task, ...taskData };
-            } else {
-              return task;
-            }
-          })
-        );
-        setParsing(false);
-        // setIsLoading(true);
-        setValue("");
-      } else {
-        setError("Failed to add task");
-      }
-    } catch (error) {
-      setError("Error during toggling state");
-      console.log(error);
-    }
-  };
+  //       setTasks((prevTasks) =>
+  //         prevTasks.map((task) => {
+  //           if (task.id === value) {
+  //             return { ...task, ...taskData };
+  //           } else {
+  //             return task;
+  //           }
+  //         })
+  //       );
+  //       setParsing(false);
+  //       // setIsLoading(true);
+  //       setValue("");
+  //     } else {
+  //       setError("Failed to add task");
+  //     }
+  //   } catch (error) {
+  //     setError("Error during toggling state");
+  //     console.log(error);
+  //   }
+  // };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -652,14 +658,14 @@ function TaskForm({ accessToken, companyId }) {
                         </span>
                         <select
                           id="time"
-                          value={taskTime}
+                          value={taskTime ? taskTime : undefined}
                           onChange={(e) => setTaskTime(e.target.value)}
                           className="border bg-white rounded p-2  px-10 pl-12  text-xl"
                           required
                         >
                           <option value="">Time</option>
 
-                          <option value="00:00">12:00AM</option>
+                          {/* <option value="00:00">12:00AM</option> */}
                           <option value="00:30">12:30AM</option>
                           <option value="01:00">01:00AM</option>
                           <option value="01:30">01:30AM</option>
