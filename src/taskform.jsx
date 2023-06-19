@@ -50,6 +50,8 @@ function TaskForm({ accessToken, companyId }) {
   const [editVariable, setEditVariable] = useState("");
   const [totalTime, setTotalTime] = useState();
   const [parsing, setParsing] = useState(false);
+  const [value, setValue] = useState("");
+  const [isComplete, setIsComplete] = useState("");
   // const [isLoading2, setisLoading2] = useState(true);
 
   // const [selected, setSelected] = React.useState();
@@ -107,7 +109,7 @@ function TaskForm({ accessToken, companyId }) {
   //     selectedUser != null &&
   //     taskTime != null
   //   ) {
-  //     // setisLoading2(false);
+  //     toggleState()
   //   }
   // }, [taskTime, taskDescription, taskDate, selectedUser]);
 
@@ -377,7 +379,95 @@ function TaskForm({ accessToken, companyId }) {
     setEditVariable("");
   };
 
-  
+  // Toggle state
+  useEffect(() => {
+    axios
+      .get(
+        `https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${value}?company_id=${companyId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.results, 'response');
+        setTaskDescription(response.data.results.task_msg);
+        setTotalTime(response.data.results.task_time);
+        setTaskDate(response.data.results.task_date);
+        setSelectedDate(response.data.results.task_date);
+        setSelectedUser(response.data.results.assigned_user);
+        setIsComplete(response.data.results.is_completed);
+        // toggleState();
+      })
+      .catch((e) => console.log(e));
+    // console.log(edit)
+  }, [value]);
+
+  const toggleState = async (e) => {
+    // e.preventDefault();
+    setParsing(true);
+
+    // Convert taskTime to seconds
+    const [hours, minutes] = taskTime.split(":");
+    const totalSeconds = parseInt(hours) * 60 * 60 + parseInt(minutes) * 60;
+    let status;
+    const complete = isComplete;
+    if (complete == 0) {
+      status = 1;
+    } else {
+      status = 0;
+    }
+    const taskData = {
+      assigned_user: selectedUser,
+      task_date: taskDate,
+      task_time: totalSeconds,
+      is_completed: status,
+      time_zone: new Date().getTimezoneOffset() * 60,
+      task_msg: taskDescription,
+    };
+
+    console.log(taskData, 'taskData');
+
+    try {
+      const response = await axios.put(
+        ` https://stage.api.sloovi.com/task/lead_65b171d46f3945549e3baa997e3fc4c2/${value}?company_id=${companyId}`,
+        taskData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("completion");
+
+        setTasks((prevTasks) =>
+          prevTasks.map((task) => {
+            if (task.id === value) {
+              return { ...task, ...taskData };
+            } else {
+              return task;
+            }
+          })
+        );
+        setParsing(false);
+        // setIsLoading(true);
+        setValue("");
+      } else {
+        setError("Failed to add task");
+      }
+    } catch (error) {
+      setError("Error during toggling state");
+      console.log(error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -421,7 +511,7 @@ function TaskForm({ accessToken, companyId }) {
           color: "#767986",
         }}
       >
-       <i>Add description,</i> 
+        <i>Add description,</i>
       </div>
 
       <div
@@ -477,7 +567,6 @@ function TaskForm({ accessToken, companyId }) {
                 marginBottom: "-255px",
                 marginTop: "-270px",
                 marginRight: "1021px",
-                
               }}
             >
               <div
@@ -992,7 +1081,7 @@ function TaskForm({ accessToken, companyId }) {
                       </li> */}
                       <li
                         className={`flex-grow text-black font-semibold ${
-                          task.isCompleted ? "completed-task" : ""
+                          task.is_completed ? "completed-task" : ""
                         }`}
                         style={{ color: "#262E39" }}
                       >
@@ -1034,6 +1123,7 @@ function TaskForm({ accessToken, companyId }) {
                             color: "#464A55",
                             fontSize: "20px",
                           }}
+                          // onClick={() => setValue(task.id)}
                         />
                       </div>
                     </div>
